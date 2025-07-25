@@ -18,7 +18,16 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'sans': ['Poppins', 'ui-sans-serif', 'system-ui'],
+			},
 			colors: {
+				'brand': {
+					'black': 'hsl(var(--brand-black))',
+					'orange': 'hsl(var(--brand-orange))',
+					'light': 'hsl(var(--brand-light))',
+					'gray': 'hsl(var(--brand-gray))',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
