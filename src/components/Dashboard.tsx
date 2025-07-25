@@ -201,24 +201,25 @@ const ProfileCard = () => {
 
   return (
     <div className="bg-card rounded-2xl p-6 shadow-sm border">
-      <div className="flex items-start space-x-4 mb-6">
-        <div className="w-20 h-20 rounded-full overflow-hidden">
+      {/* Large centered profile image */}
+      <div className="flex flex-col items-center mb-6">
+        <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-muted">
           <img 
-            src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=80&h=80&fit=crop"
+            src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=128&h=128&fit=crop"
             alt="Lora Piterson"
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold text-brand-black">Lora Piterson</h3>
-          <p className="text-sm text-brand-gray font-medium">UX Designer</p>
-          <div className="bg-accent/20 text-brand-black px-3 py-1 rounded-full text-sm font-semibold mt-2 inline-block">
+        <div className="text-center">
+          <h3 className="text-xl font-bold text-brand-black mb-1">Lora Piterson</h3>
+          <p className="text-sm text-brand-gray font-medium mb-3">UX Designer</p>
+          <div className="bg-accent/20 text-brand-black px-4 py-2 rounded-full text-sm font-bold">
             $1,200
           </div>
         </div>
       </div>
       
-      <div className="space-y-4">
+      <div className="space-y-3">
         {sections.map((section, index) => (
           <div key={index} className="border-b border-border last:border-b-0">
             <button
@@ -480,17 +481,17 @@ const Dashboard = () => {
       
       <div className="p-4 lg:p-6 lg:ml-64 transition-all duration-300">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl lg:text-4xl font-bold text-brand-black mb-6">Welcome in, Nixtio</h1>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black mb-6">Welcome in, Nixtio</h1>
           
           <StatsRow />
           <TopStatsCards />
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-4 xl:col-span-3">
               <ProfileCard />
             </div>
             
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-5 xl:col-span-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <ProgressWidget />
                 <TimeTracker />
