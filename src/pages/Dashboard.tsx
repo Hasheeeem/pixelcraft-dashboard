@@ -1,129 +1,146 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Settings, Bell, Search, Edit3, ArrowUp, Play, Pause, Square, Menu, X } from 'lucide-react';
+import { ChevronDown, ChevronUp, Edit3, ArrowUp, Play, Pause, Square } from 'lucide-react';
+import { AuroraBackground } from '../components/ui/aurora-background';
+import { Sidebar, SidebarBody, SidebarLink, SidebarSection } from '../components/ui/sidebar';
+import { motion } from 'framer-motion';
+import {
+  IconActivity,
+  IconSettings,
+  IconBug,
+  IconMoon,
+  IconCircleCheck,
+  IconDatabase,
+  IconContainer,
+  IconCloud,
+  IconDeviceDesktop,
+  IconApi,
+  IconShield,
+} from '@tabler/icons-react';
 
-const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (open: boolean) => void }) => {
-  const feedItems = [
-    { name: 'Feed', active: false },
-    { name: 'AutoFix', active: false },
-    { name: 'Snoozed', active: false },
-    { name: 'Ignored', active: true, count: '99+' },
-    { name: 'Solved', active: false }
+const ResponsiveSidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean; setSidebarOpen: (open: boolean) => void }) => {
+  // Feed items with proper icons
+  const feedLinks = [
+    {
+      label: "Feed",
+      href: "#",
+      icon: <IconActivity className="h-5 w-5 shrink-0" />,
+      active: false,
+    },
+    {
+      label: "AutoFix",
+      href: "#",
+      icon: <IconSettings className="h-5 w-5 shrink-0" />,
+      active: false,
+    },
+    {
+      label: "Snoozed",
+      href: "#",
+      icon: <IconMoon className="h-5 w-5 shrink-0" />,
+      active: false,
+    },
+    {
+      label: "Ignored",
+      href: "#",
+      icon: <IconBug className="h-5 w-5 shrink-0" />,
+      active: true,
+      count: "99+",
+    },
+    {
+      label: "Solved",
+      href: "#",
+      icon: <IconCircleCheck className="h-5 w-5 shrink-0" />,
+      active: false,
+    },
   ];
 
-  const sections = [
-    { name: 'Repositories', count: '1' },
-    { name: 'Containers', count: '2' },
-    { name: 'Clouds', count: '1' },
-    { name: 'Virtual Machines', count: '1' },
-    { name: 'Domains & APIs', count: '1' },
-    { name: 'Zen Firewall', count: '1' }
+  // Infrastructure sections with icons
+  const infrastructureLinks = [
+    {
+      label: "Repositories",
+      href: "#",
+      icon: <IconDatabase className="h-5 w-5 shrink-0" />,
+      count: "1",
+    },
+    {
+      label: "Containers",
+      href: "#",
+      icon: <IconContainer className="h-5 w-5 shrink-0" />,
+      count: "2",
+    },
+    {
+      label: "Clouds",
+      href: "#",
+      icon: <IconCloud className="h-5 w-5 shrink-0" />,
+      count: "1",
+    },
+    {
+      label: "Virtual Machines",
+      href: "#",
+      icon: <IconDeviceDesktop className="h-5 w-5 shrink-0" />,
+      count: "1",
+    },
+    {
+      label: "Domains & APIs",
+      href: "#",
+      icon: <IconApi className="h-5 w-5 shrink-0" />,
+      count: "1",
+    },
+    {
+      label: "Zen Firewall",
+      href: "#",
+      icon: <IconShield className="h-5 w-5 shrink-0" />,
+      count: "1",
+    },
   ];
 
   return (
-    <>
-      {/* Mobile overlay */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
-      
-      {/* Sidebar */}
-      <div className={`fixed left-0 top-0 h-screen bg-brand-black text-brand-light z-50 transition-transform duration-300 ease-in-out ${
-        isOpen ? 'translate-x-0' : '-translate-x-full'
-      } lg:translate-x-0 w-64 p-6`}>
-        {/* Mobile close button */}
-        <button 
-          onClick={() => setIsOpen(false)}
-          className="lg:hidden absolute top-4 right-4 text-brand-light hover:text-brand-orange"
-        >
-          <X size={20} />
-        </button>
-
-        <div className="mb-8 mt-8 lg:mt-0">
-          <div className="space-y-2">
-            {feedItems.map((item, index) => (
-              <div
-                key={index}
-                className={`flex items-center justify-between px-3 py-2 rounded-lg cursor-pointer transition-colors ${
-                  item.active ? 'bg-accent' : 'hover:bg-brand-gray/20'
-                }`}
-              >
-                <span className="text-sm font-medium">{item.name}</span>
-                {item.count && (
-                  <span className="bg-accent text-accent-foreground text-xs px-2 py-1 rounded-full font-medium">
-                    {item.count}
-                  </span>
-                )}
-              </div>
+    <Sidebar open={sidebarOpen} setOpen={setSidebarOpen}>
+      <SidebarBody className="justify-between gap-10">
+        <div className="flex flex-1 flex-col">
+          {/* Logo */}
+          <Logo />
+          
+          {/* Feed Links */}
+          <div className="mt-8 flex flex-col gap-2">
+            {feedLinks.map((link, idx) => (
+              <SidebarLink key={idx} link={link} />
             ))}
           </div>
-        </div>
 
-        <div className="border-t border-brand-gray/30 pt-6">
-          <div className="space-y-4">
-            {sections.map((section, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between px-3 py-2 hover:bg-brand-gray/20 rounded-lg cursor-pointer transition-colors"
-              >
-                <span className="text-sm text-brand-light/80 font-medium">{section.name}</span>
-                <span className="text-xs text-brand-gray bg-brand-gray/20 px-2 py-1 rounded-full font-medium">
-                  {section.count}
-                </span>
-              </div>
+          {/* Infrastructure Section */}
+          <SidebarSection title="Infrastructure" className="mt-6">
+            {infrastructureLinks.map((link, idx) => (
+              <SidebarLink key={idx} link={link} />
             ))}
-          </div>
-        </div>
+          </SidebarSection>
 
-        <div className="mt-8 pt-6 border-t border-brand-gray/30">
-          <div className="text-sm text-brand-light/80 mb-4 font-medium">Integrations</div>
-          <div className="text-xs text-brand-gray">No integrations configured</div>
+          {/* Integrations Section */}
+          <SidebarSection title="Integrations" className="mt-6">
+            <div className="px-3 py-2 text-xs text-brand-gray">
+              No integrations configured
+            </div>
+          </SidebarSection>
         </div>
-      </div>
-    </>
+      </SidebarBody>
+    </Sidebar>
   );
 };
 
-const NavBar = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
-  const tabs = ['Dashboard', 'People', 'Hiring', 'Devices', 'Apps', 'Salary', 'Calendar', 'Reviews'];
-  
+const Logo = () => {
   return (
-    <nav className="w-full bg-brand-black px-4 lg:px-6 py-3 flex items-center justify-between lg:ml-64">
-      {/* Mobile menu button */}
-      <button 
-        onClick={toggleSidebar}
-        className="lg:hidden text-brand-light hover:text-brand-orange mr-4"
+    <a
+      href="#"
+      className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal"
+    >
+      <div className="h-5 w-6 shrink-0 rounded-tl-lg rounded-tr-sm rounded-br-lg rounded-bl-sm bg-brand-light" />
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="font-medium whitespace-pre text-brand-light"
       >
-        <Menu size={20} />
-      </button>
-
-      <div className="flex items-center space-x-4 lg:space-x-8 flex-1 lg:flex-none">
-        <div className="bg-brand-light text-brand-black px-4 py-2 rounded-full font-semibold text-sm lg:text-base">
-          Crextio
-        </div>
-        <div className="hidden md:flex space-x-4 lg:space-x-6">
-          {tabs.map((tab, index) => (
-            <button
-              key={tab}
-              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                index === 0 
-                  ? 'bg-brand-gray/20 text-brand-light' 
-                  : 'text-brand-gray hover:text-brand-light'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className="flex items-center space-x-4 text-brand-gray">
-        <Settings size={18} className="hover:text-brand-light cursor-pointer transition-colors" />
-        <Bell size={18} className="hover:text-brand-light cursor-pointer transition-colors" />
-        <Search size={18} className="hover:text-brand-light cursor-pointer transition-colors" />
-      </div>
-    </nav>
+        Crextio
+      </motion.span>
+    </a>
   );
 };
 
@@ -166,7 +183,7 @@ const TopStatsCards = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       {stats.map((stat, index) => (
-        <div key={index} className="bg-accent/10 rounded-2xl p-4">
+        <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 border border-white/20 shadow-lg">
           <div className="text-3xl font-bold text-brand-black">{stat.number}</div>
           <div className="text-sm text-brand-gray font-medium">{stat.label}</div>
         </div>
@@ -200,10 +217,10 @@ const ProfileCard = () => {
   ];
 
   return (
-    <div className="bg-card rounded-2xl p-6 shadow-sm border">
+    <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
       {/* Large centered profile image */}
       <div className="flex flex-col items-center mb-6">
-        <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-muted">
+        <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white/50">
           <img 
             src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=128&h=128&fit=crop"
             alt="Lora Piterson"
@@ -221,7 +238,7 @@ const ProfileCard = () => {
       
       <div className="space-y-3">
         {sections.map((section, index) => (
-          <div key={index} className="border-b border-border last:border-b-0">
+          <div key={index} className="border-b border-gray-200/50 last:border-b-0">
             <button
               onClick={() => setExpandedSection(expandedSection === section.name ? null : section.name)}
               className="w-full flex items-center justify-between py-3 text-left"
@@ -248,7 +265,7 @@ const ProgressWidget = () => {
   const heights = [20, 60, 40, 80, 100, 30]; // percentages for bar heights
   
   return (
-    <div className="bg-card rounded-2xl p-6 shadow-sm border">
+    <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-brand-black">Progress</h3>
         <Edit3 size={16} className="text-brand-gray" />
@@ -260,7 +277,7 @@ const ProgressWidget = () => {
           <div key={index} className="flex-1 flex flex-col items-center">
             <div className="w-full relative">
               <div 
-                className={`w-full rounded-t ${index === 4 ? 'bg-accent' : 'bg-muted'}`}
+                className={`w-full rounded-t ${index === 4 ? 'bg-accent' : 'bg-gray-200'}`}
                 style={{ height: `${heights[index]}%`, minHeight: '8px' }}
               ></div>
               {index === 4 && (
@@ -281,7 +298,7 @@ const TimeTracker = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   
   return (
-    <div className="bg-card rounded-2xl p-6 shadow-sm border">
+    <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-brand-black">Time tracker</h3>
         <ArrowUp size={16} className="text-brand-gray" />
@@ -294,7 +311,7 @@ const TimeTracker = () => {
               cx="50"
               cy="50"
               r="40"
-              stroke="hsl(var(--muted))"
+              stroke="#E5E7EB"
               strokeWidth="8"
               fill="none"
             />
@@ -318,11 +335,11 @@ const TimeTracker = () => {
         <div className="flex items-center space-x-4">
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            className="w-8 h-8 bg-muted rounded-full flex items-center justify-center hover:bg-muted/80 transition-colors"
+            className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors"
           >
             {isPlaying ? <Pause size={14} /> : <Play size={14} />}
           </button>
-          <button className="w-8 h-8 bg-muted rounded-full flex items-center justify-center hover:bg-muted/80 transition-colors">
+          <button className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors">
             <Square size={14} />
           </button>
           <button className="w-8 h-8 bg-brand-black rounded-full flex items-center justify-center text-brand-light hover:bg-brand-black/80 transition-colors">
@@ -344,7 +361,7 @@ const OnboardingPanel = () => {
   ];
   
   return (
-    <div className="bg-card rounded-2xl p-6 shadow-sm border">
+    <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-brand-black">Onboarding</h3>
         <span className="text-lg font-bold text-brand-black">18%</span>
@@ -354,7 +371,7 @@ const OnboardingPanel = () => {
         <div className="flex space-x-2 mb-3">
           <div className="flex-1 bg-accent h-2 rounded-full"></div>
           <div className="flex-1 bg-accent/40 h-2 rounded-full"></div>
-          <div className="flex-1 bg-muted h-2 rounded-full"></div>
+          <div className="flex-1 bg-gray-200 h-2 rounded-full"></div>
         </div>
         <div className="flex justify-between text-xs text-brand-gray font-medium">
           <span>50%</span>
@@ -367,7 +384,7 @@ const OnboardingPanel = () => {
         <span className="text-sm font-semibold text-brand-gray">Task</span>
       </div>
       
-      <div className="bg-brand-black rounded-xl p-4">
+      <div className="bg-brand-black/95 backdrop-blur-sm rounded-xl p-4">
         <div className="text-brand-light text-sm font-semibold mb-4">Onboarding Task 2/8</div>
         
         <div className="space-y-3">
@@ -408,7 +425,7 @@ const CalendarStrip = () => {
   const times = ['8:00 am', '9:00 am', '10:00 am', '11:00 am'];
   
   return (
-    <div className="bg-card rounded-2xl p-6 shadow-sm border">
+    <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
       <div className="flex items-center justify-between mb-6">
         <div className="flex space-x-4 text-sm">
           <span className="text-brand-gray">August</span>
@@ -444,7 +461,7 @@ const CalendarStrip = () => {
               </div>
             )}
             {index === 2 && (
-              <div className="col-span-2 bg-muted text-brand-black text-xs px-3 py-2 rounded-full flex items-center space-x-2">
+              <div className="col-span-2 bg-gray-200 text-brand-black text-xs px-3 py-2 rounded-full flex items-center space-x-2">
                 <span className="font-medium">Onboarding Session</span>
                 <div className="flex -space-x-1">
                   <div className="w-4 h-4 bg-accent rounded-full border border-white"></div>
@@ -470,37 +487,39 @@ const CalendarStrip = () => {
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
   return (
-    <div className="min-h-screen bg-background font-sans">
-      <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
-      <NavBar toggleSidebar={toggleSidebar} />
+    <div className="w-full h-screen font-sans relative flex overflow-hidden">
+      {/* Aurora Background - Fixed behind everything */}
+      <AuroraBackground />
       
-      <div className="p-4 lg:p-6 lg:ml-64 transition-all duration-300">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black mb-6">Welcome in, Nixtio</h1>
-          
-          <StatsRow />
-          <TopStatsCards />
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div className="lg:col-span-4 xl:col-span-3">
-              <ProfileCard />
-            </div>
+      {/* Responsive Sidebar */}
+      <ResponsiveSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      
+      {/* Main Content Area - No navbar, clean layout */}
+      <div className="flex-1 overflow-y-auto overflow-x-hidden">
+        <div className="p-4 lg:p-6">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black mb-6">Welcome in, Nixtio</h1>
             
-            <div className="lg:col-span-5 xl:col-span-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <ProgressWidget />
-                <TimeTracker />
+            <StatsRow />
+            <TopStatsCards />
+            
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-6">
+              <div className="lg:col-span-4 xl:col-span-3">
+                <ProfileCard />
               </div>
-              <CalendarStrip />
-            </div>
-            
-            <div className="lg:col-span-3">
-              <OnboardingPanel />
+              
+              <div className="lg:col-span-5 xl:col-span-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <ProgressWidget />
+                  <TimeTracker />
+                </div>
+                <CalendarStrip />
+              </div>
+              
+              <div className="lg:col-span-3">
+                <OnboardingPanel />
+              </div>
             </div>
           </div>
         </div>
