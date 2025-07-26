@@ -22,6 +22,7 @@ import {
   IconMessageCircle,
   IconBook,
   IconHelp,
+  IconUser,
 } from '@tabler/icons-react';
 
 const ResponsiveSidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean; setSidebarOpen: (open: boolean) => void }) => {
@@ -84,6 +85,12 @@ const ResponsiveSidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boole
     },
   ];
 
+  // Profile section
+  const profileLink = {
+    label: "Lora Piterson",
+    href: "#",
+    icon: <IconUser className="h-5 w-5 shrink-0" />,
+  };
   return (
     <Sidebar open={sidebarOpen} setOpen={setSidebarOpen}>
       <SidebarBody className="justify-between gap-10">
@@ -105,12 +112,10 @@ const ResponsiveSidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boole
             ))}
           </div>
 
-          {/* Integrations Section */}
-          <SidebarSection title="Integrations" className="mt-6">
-            <div className="px-3 py-2 text-xs text-brand-gray">
-              No integrations configured
-            </div>
-          </SidebarSection>
+          {/* Profile Section */}
+          <div className="mt-auto pt-4 border-t border-brand-gray/30">
+            <SidebarLink link={profileLink} />
+          </div>
         </div>
       </SidebarBody>
     </Sidebar>
