@@ -32,7 +32,7 @@ const ResponsiveSidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boole
       label: "Dashboard",
       href: "#",
       icon: <IconDashboard className="h-5 w-5 shrink-0" />,
-      active: false,
+      active: true,
     },
     {
       label: "Projects",
@@ -50,7 +50,7 @@ const ResponsiveSidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boole
       label: "Integrations",
       href: "#",
       icon: <IconBrandGithub className="h-5 w-5 shrink-0" />,
-      active: true,
+      active: false,
       count: "99+",
     },
     {
@@ -105,15 +105,15 @@ const ResponsiveSidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boole
             ))}
           </div>
 
-          {/* Bottom Links with gap */}
-          <div className="mt-8 flex flex-col gap-2">
+          {/* Bottom Links with larger gap to push to bottom */}
+          <div className="mt-auto flex flex-col gap-2">
             {bottomLinks.map((link, idx) => (
               <SidebarLink key={idx} link={link} />
             ))}
           </div>
 
-          {/* Profile Section */}
-          <div className="mt-auto pt-4 border-t border-brand-gray/30">
+          {/* Profile Section - stays at very bottom */}
+          <div className="pt-4 border-t border-brand-gray/30">
             <SidebarLink link={profileLink} />
           </div>
         </div>
@@ -128,14 +128,7 @@ const Logo = () => {
       href="#"
       className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal"
     >
-      SECURE THREAD
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="font-medium whitespace-pre text-brand-light"
-      >
-        Crextio
-      </motion.span>
+      <span className="font-medium text-brand-light">SECURE THREAD</span>
     </a>
   );
 };
