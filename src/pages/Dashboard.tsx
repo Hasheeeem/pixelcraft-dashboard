@@ -15,33 +15,40 @@ import {
   IconDeviceDesktop,
   IconApi,
   IconShield,
+  IconDashboard,
+  IconFolder,
+  IconUsers,
+  IconBrandGithub,
+  IconMessageCircle,
+  IconBook,
+  IconHelp,
 } from '@tabler/icons-react';
 
 const ResponsiveSidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boolean; setSidebarOpen: (open: boolean) => void }) => {
   // Feed items with proper icons
   const feedLinks = [
     {
-      label: "Feed",
+      label: "Dashboard",
       href: "#",
-      icon: <IconActivity className="h-5 w-5 shrink-0" />,
+      icon: <IconDashboard className="h-5 w-5 shrink-0" />,
       active: false,
     },
     {
-      label: "AutoFix",
+      label: "Projects",
       href: "#",
-      icon: <IconSettings className="h-5 w-5 shrink-0" />,
+      icon: <IconFolder className="h-5 w-5 shrink-0" />,
       active: false,
     },
     {
-      label: "Snoozed",
+      label: "Members",
       href: "#",
-      icon: <IconMoon className="h-5 w-5 shrink-0" />,
+      icon: <IconUsers className="h-5 w-5 shrink-0" />,
       active: false,
     },
     {
-      label: "Ignored",
+      label: "Integrations",
       href: "#",
-      icon: <IconBug className="h-5 w-5 shrink-0" />,
+      icon: <IconBrandGithub className="h-5 w-5 shrink-0" />,
       active: true,
       count: "99+",
     },
@@ -54,42 +61,26 @@ const ResponsiveSidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boole
   ];
 
   // Infrastructure sections with icons
-  const infrastructureLinks = [
+  const bottomLinks = [
     {
-      label: "Repositories",
+      label: "Feedback",
       href: "#",
-      icon: <IconDatabase className="h-5 w-5 shrink-0" />,
-      count: "1",
+      icon: <IconMessageCircle className="h-5 w-5 shrink-0" />,
     },
     {
-      label: "Containers",
+      label: "Settings",
       href: "#",
-      icon: <IconContainer className="h-5 w-5 shrink-0" />,
-      count: "2",
+      icon: <IconSettings className="h-5 w-5 shrink-0" />,
     },
     {
-      label: "Clouds",
+      label: "Docs",
       href: "#",
-      icon: <IconCloud className="h-5 w-5 shrink-0" />,
-      count: "1",
+      icon: <IconBook className="h-5 w-5 shrink-0" />,
     },
     {
-      label: "Virtual Machines",
+      label: "Help",
       href: "#",
-      icon: <IconDeviceDesktop className="h-5 w-5 shrink-0" />,
-      count: "1",
-    },
-    {
-      label: "Domains & APIs",
-      href: "#",
-      icon: <IconApi className="h-5 w-5 shrink-0" />,
-      count: "1",
-    },
-    {
-      label: "Zen Firewall",
-      href: "#",
-      icon: <IconShield className="h-5 w-5 shrink-0" />,
-      count: "1",
+      icon: <IconHelp className="h-5 w-5 shrink-0" />,
     },
   ];
 
@@ -107,12 +98,12 @@ const ResponsiveSidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boole
             ))}
           </div>
 
-          {/* Infrastructure Section */}
-          <SidebarSection title="Infrastructure" className="mt-6">
-            {infrastructureLinks.map((link, idx) => (
+          {/* Bottom Links with gap */}
+          <div className="mt-8 flex flex-col gap-2">
+            {bottomLinks.map((link, idx) => (
               <SidebarLink key={idx} link={link} />
             ))}
-          </SidebarSection>
+          </div>
 
           {/* Integrations Section */}
           <SidebarSection title="Integrations" className="mt-6">
@@ -132,7 +123,7 @@ const Logo = () => {
       href="#"
       className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal"
     >
-      <div className="h-5 w-6 shrink-0 rounded-tl-lg rounded-tr-sm rounded-br-lg rounded-bl-sm bg-brand-light" />
+      SECURE THREAD
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
