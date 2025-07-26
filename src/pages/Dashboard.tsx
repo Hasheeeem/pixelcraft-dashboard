@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Edit3, ArrowUp, Play, Pause, Square } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { AuroraBackground } from '../components/ui/aurora-background';
 import { Sidebar, SidebarBody, SidebarLink, SidebarSection } from '../components/ui/sidebar';
 import { motion } from 'framer-motion';
@@ -488,6 +489,13 @@ const Dashboard = () => {
       <div className="flex-1 overflow-y-auto overflow-x-hidden">
         <div className="p-4 lg:p-6">
           <div className="max-w-7xl mx-auto">
+            {/* Breadcrumb Navigation */}
+            <div className="flex items-center space-x-2 text-sm text-brand-gray mb-4">
+              <span className="font-medium text-brand-black">Lora Piterson</span>
+              <ChevronRight size={16} className="text-brand-gray" />
+              <span className="font-medium text-brand-black">Dashboard</span>
+            </div>
+            
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black mb-6">Welcome in, Nixtio</h1>
             
             <StatsRow />
