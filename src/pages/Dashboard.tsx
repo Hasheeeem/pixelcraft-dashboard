@@ -37,13 +37,13 @@ const ResponsiveSidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boole
     },
     {
       label: "Projects",
-      href: "#",
+      href: "/projects",
       icon: <IconFolder className="h-5 w-5 shrink-0" />,
       active: false,
     },
     {
       label: "Members",
-      href: "#",
+      href: "/members",
       icon: <IconUsers className="h-5 w-5 shrink-0" />,
       active: false,
     },
