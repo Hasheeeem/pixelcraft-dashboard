@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Edit3, ArrowUp, Play, Pause, Square } from 'lucide-react';
 import { ChevronRight } from 'lucide-react';
-import { AuroraBackground } from '../components/ui/aurora-background';
+import { EtherealBackground } from '../components/ui/ethereal-background';
 import { Sidebar, SidebarBody, SidebarLink, SidebarSection } from '../components/ui/sidebar';
 import { motion } from 'framer-motion';
 import {
@@ -479,24 +479,30 @@ const Dashboard = () => {
 
   return (
     <div className="w-full h-screen font-sans relative flex overflow-hidden">
-      {/* Aurora Background - Fixed behind everything */}
-      <AuroraBackground />
+      {/* Ethereal Shadows Background - Black base with white moving effects */}
+      <EtherealBackground 
+        color="rgba(255, 255, 255, 0.6)"    // White shadows moving over black
+        animation={{ scale: 100, speed: 90 }}
+        noise={{ opacity: 0.8, scale: 1.2 }}
+        sizing="fill"
+      />
       
       {/* Responsive Sidebar */}
       <ResponsiveSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       
-      {/* Main Content Area - No navbar, clean layout */}
-      <div className="flex-1 overflow-y-auto overflow-x-hidden">
+      {/* Main Content Area - No navbar, clean layout with proper z-index */}
+      <div className="flex-1 overflow-y-auto overflow-x-hidden relative z-10">
         <div className="p-4 lg:p-6">
           <div className="max-w-7xl mx-auto">
-            {/* Breadcrumb Navigation */}
-            <div className="flex items-center space-x-2 text-sm text-brand-gray mb-4">
-              <span className="font-medium text-brand-black">Lora Piterson</span>
-              <ChevronRight size={16} className="text-brand-gray" />
-              <span className="font-medium text-brand-black">Dashboard</span>
+            {/* Breadcrumb Navigation - White text for dark background */}
+            <div className="flex items-center space-x-2 text-sm mb-4">
+              <span className="font-medium text-white">Lora Piterson</span>
+              <ChevronRight size={16} className="text-gray-300" />
+              <span className="font-medium text-white">Dashboard</span>
             </div>
             
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-brand-black mb-6">Welcome in, Nixtio</h1>
+            {/* Main heading - White text for dark background */}
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-6">Welcome in, Nixtio</h1>
             
             <StatsRow />
             <TopStatsCards />

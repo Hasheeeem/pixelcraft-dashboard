@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AuroraBackground } from '@/components/ui/aurora-background';
+import { EtherealBackground } from '../components/ui/ethereal-background';
 import { Sidebar, SidebarBody, SidebarLink } from '@/components/ui/sidebar';
 import { Plus, Upload, Filter, Search, ChevronDown } from 'lucide-react';
 import {
@@ -206,7 +206,12 @@ const Projects = () => {
 
   return (
     <div className="w-full h-screen font-sans relative flex overflow-hidden">
-      <AuroraBackground />
+      <EtherealBackground 
+        color="rgba(255, 255, 255, 0.6)"    // White shadows moving over black
+        animation={{ scale: 100, speed: 90 }}
+        noise={{ opacity: 0.8, scale: 1.2 }}
+        sizing="fill"
+      />
       
       <ResponsiveSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       
