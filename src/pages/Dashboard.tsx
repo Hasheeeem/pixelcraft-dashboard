@@ -49,7 +49,7 @@ const ResponsiveSidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boole
     },
     {
       label: "Integrations",
-      href: "#",
+      href: "/integrations",
       icon: <IconBrandGithub className="h-5 w-5 shrink-0" />,
       active: false,
       count: "99+",

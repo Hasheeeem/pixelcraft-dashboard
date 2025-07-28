@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { EtherealBackground } from '../components/ui/ethereal-background';
 import { Sidebar, SidebarBody, SidebarLink } from '@/components/ui/sidebar';
-import { Plus, Upload, Filter, Search, ChevronDown } from 'lucide-react';
+import { Plus, Upload, Filter, Search, ChevronDown, ChevronRight } from 'lucide-react';
 import {
   IconDashboard,
   IconFolder,
@@ -42,7 +42,7 @@ const ResponsiveSidebar = ({ sidebarOpen, setSidebarOpen }: { sidebarOpen: boole
     },
     {
       label: "Integrations",
-      href: "#",
+      href: "/integrations",
       icon: <IconBrandGithub className="h-5 w-5 shrink-0" />,
       active: false,
       count: "99+",
@@ -215,9 +215,10 @@ const Projects = () => {
       
       <ResponsiveSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       
-      <div className="flex-1 overflow-y-auto overflow-x-hidden">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden relative z-10">
         <div className="p-4 lg:p-6">
           <div className="max-w-7xl mx-auto">
+
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
               <div>
