@@ -8,6 +8,7 @@ import Projects from "./pages/Projects";
 import Members from "./pages/Members";
 import Integrations from "./pages/Integrations";
 import Settings from "./pages/Settings";
+import Solved from "./pages/Solved";  // Add this import
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/members" element={<Members />} />
           <Route path="/integrations" element={<Integrations />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/solved" element={<Solved />} />  {/* Add this route */}
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

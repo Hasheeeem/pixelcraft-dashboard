@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Edit3, ArrowUp, Play, Pause, Square } from 'lucide-react';
+import { ChevronDown, ChevronUp, AlertTriangle, ArrowUp, Play, Pause, Square, Shield, Bug, CheckCircle, Clock, Zap, Activity, TrendingUp, TrendingDown } from 'lucide-react';
 import { ChevronRight } from 'lucide-react';
 import { EtherealBackground } from '../components/ui/ethereal-background';
 import { Sidebar, SidebarBody, SidebarLink, SidebarSection } from '../components/ui/sidebar';
@@ -136,10 +136,10 @@ const Logo = () => {
 
 const StatsRow = () => {
   const stats = [
-    { label: 'Interviews', value: '6%', bgColor: 'bg-brand-black', textColor: 'text-brand-light' },
-    { label: 'Hired', value: '2%', bgColor: 'bg-accent', textColor: 'text-accent-foreground' },
-    { label: 'Project time', value: '60%', bgColor: 'bg-accent', textColor: 'text-accent-foreground', pattern: true },
-    { label: 'Output', value: '10%', bgColor: 'bg-brand-light', textColor: 'text-brand-black' }
+    { label: 'Critical Issues', value: '12', bgColor: 'bg-red-500', textColor: 'text-white', trend: 'down' },
+    { label: 'Security Score', value: '94%', bgColor: 'bg-green-500', textColor: 'text-white', trend: 'up' },
+    { label: 'Code Coverage', value: '87%', bgColor: 'bg-accent', textColor: 'text-accent-foreground', pattern: true, trend: 'up' },
+    { label: 'Scans Today', value: '8', bgColor: 'bg-brand-light', textColor: 'text-brand-black', trend: 'up' }
   ];
 
   return (
@@ -149,7 +149,7 @@ const StatsRow = () => {
           key={index}
           className={`${stat.bgColor} ${stat.textColor} px-4 py-2 rounded-full text-sm font-medium ${
             stat.pattern ? 'relative overflow-hidden' : ''
-          }`}
+          } flex items-center space-x-2`}
         >
           {stat.pattern && (
             <div className="absolute inset-0 opacity-20" style={{
@@ -157,6 +157,11 @@ const StatsRow = () => {
             }}></div>
           )}
           <span className="relative font-semibold">{stat.label} {stat.value}</span>
+          {stat.trend === 'up' ? (
+            <TrendingUp size={14} className="relative" />
+          ) : (
+            <TrendingDown size={14} className="relative" />
+          )}
         </div>
       ))}
     </div>
@@ -165,63 +170,100 @@ const StatsRow = () => {
 
 const TopStatsCards = () => {
   const stats = [
-    { number: '78', label: 'Employee' },
-    { number: '56', label: 'Hirings' },
-    { number: '203', label: 'Projects' }
+    { number: '23', label: 'Active Projects', icon: <IconFolder className="w-6 h-6" /> },
+    { number: '156', label: 'Vulnerabilities', icon: <IconBug className="w-6 h-6" /> },
+    { number: '94%', label: 'Security Score', icon: <IconShield className="w-6 h-6" /> }
   ];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       {stats.map((stat, index) => (
         <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 border border-white/20 shadow-lg">
-          <div className="text-3xl font-bold text-brand-black">{stat.number}</div>
-          <div className="text-sm text-brand-gray font-medium">{stat.label}</div>
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-3xl font-bold text-brand-black">{stat.number}</div>
+              <div className="text-sm text-brand-gray font-medium">{stat.label}</div>
+            </div>
+            <div className="text-accent opacity-60">
+              {stat.icon}
+            </div>
+          </div>
         </div>
       ))}
     </div>
   );
 };
 
-const ProfileCard = () => {
-  const [expandedSection, setExpandedSection] = useState('Devices');
+const SecurityOverviewCard = () => {
+  const [expandedSection, setExpandedSection] = useState('Recent Scans');
   
   const sections = [
-    { name: 'Pension contributions', content: null },
     { 
-      name: 'Devices', 
+      name: 'Recent Scans', 
       content: (
-        <div className="flex items-center space-x-3 mt-3 pb-3">
-          <div className="w-10 h-10 bg-brand-light rounded-lg overflow-hidden">
-            <img 
-              src="https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&w=40&h=40&fit=crop"
-              alt="MacBook"
-              className="w-full h-full object-cover"
-            />
+        <div className="space-y-3 mt-3 pb-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                <CheckCircle className="w-4 h-4 text-green-600" />
+              </div>
+              <div>
+                <span className="text-sm font-medium text-brand-black">E-commerce Platform</span>
+                <div className="text-xs text-brand-gray">2 hours ago</div>
+              </div>
+            </div>
+            <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">Clean</span>
           </div>
-          <span className="text-sm text-brand-black font-medium">MacBook Air Version M1</span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+                <AlertTriangle className="w-4 h-4 text-red-600" />
+              </div>
+              <div>
+                <span className="text-sm font-medium text-brand-black">API Gateway</span>
+                <div className="text-xs text-brand-gray">4 hours ago</div>
+              </div>
+            </div>
+            <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">3 Critical</span>
+          </div>
         </div>
       )
     },
-    { name: 'Compensation Summary', content: null },
-    { name: 'Employee Benefits', content: null }
+    { 
+      name: 'Vulnerability Types', 
+      content: (
+        <div className="space-y-2 mt-3 pb-3">
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-brand-black">SQL Injection</span>
+            <span className="text-sm font-medium text-red-600">8</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-brand-black">XSS</span>
+            <span className="text-sm font-medium text-orange-600">12</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-brand-black">Dependency Issues</span>
+            <span className="text-sm font-medium text-yellow-600">24</span>
+          </div>
+        </div>
+      )
+    },
+    { name: 'Security Policies', content: null },
+    { name: 'Compliance Status', content: null }
   ];
 
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
-      {/* Large centered profile image */}
+      {/* Security Overview Header */}
       <div className="flex flex-col items-center mb-6">
-        <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white/50">
-          <img 
-            src="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=128&h=128&fit=crop"
-            alt="Lora Piterson"
-            className="w-full h-full object-cover"
-          />
+        <div className="w-32 h-32 bg-gradient-to-br from-accent/20 to-accent/40 rounded-full mb-4 border-4 border-white/50 flex items-center justify-center">
+          <IconShield className="w-16 h-16 text-accent" />
         </div>
         <div className="text-center">
-          <h3 className="text-xl font-bold text-brand-black mb-1">Lora Piterson</h3>
-          <p className="text-sm text-brand-gray font-medium mb-3">UX Designer</p>
+          <h3 className="text-xl font-bold text-brand-black mb-1">Security Overview</h3>
+          <p className="text-sm text-brand-gray font-medium mb-3">SecureThread Platform</p>
           <div className="bg-accent/20 text-brand-black px-4 py-2 rounded-full text-sm font-bold">
-            $1,200
+            94% Secure
           </div>
         </div>
       </div>
@@ -250,48 +292,59 @@ const ProfileCard = () => {
   );
 };
 
-const ProgressWidget = () => {
-  const days = ['M', 'T', 'W', 'T', 'F', 'S'];
-  const heights = [20, 60, 40, 80, 100, 30]; // percentages for bar heights
+const SecurityScoreWidget = () => {
+  const scoreHistory = [
+    { day: 'M', score: 87 },
+    { day: 'T', score: 91 },
+    { day: 'W', score: 89 },
+    { day: 'T', score: 94 },
+    { day: 'F', score: 96 },
+    { day: 'S', score: 94 }
+  ];
   
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-brand-black">Progress</h3>
-        <Edit3 size={16} className="text-brand-gray" />
+        <h3 className="text-lg font-semibold text-brand-black">Security Score</h3>
+        <TrendingUp size={16} className="text-green-500" />
       </div>
-      <p className="text-sm text-brand-gray mb-6 font-medium">6.1 h Work Time this week</p>
+      <p className="text-sm text-brand-gray mb-6 font-medium">Weekly security trend</p>
       
-      <div className="flex items-end space-x-3 h-24">
-        {days.map((day, index) => (
+      <div className="flex items-end space-x-3 h-24 mb-4">
+        {scoreHistory.map((item, index) => (
           <div key={index} className="flex-1 flex flex-col items-center">
             <div className="w-full relative">
               <div 
                 className={`w-full rounded-t ${index === 4 ? 'bg-accent' : 'bg-gray-200'}`}
-                style={{ height: `${heights[index]}%`, minHeight: '8px' }}
+                style={{ height: `${item.score}%`, minHeight: '8px' }}
               ></div>
               {index === 4 && (
                 <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-accent text-accent-foreground text-xs px-2 py-1 rounded font-semibold whitespace-nowrap">
-                  6h 33m
+                  {item.score}%
                 </div>
               )}
             </div>
-            <span className="text-xs text-brand-gray mt-2 font-medium">{day}</span>
+            <span className="text-xs text-brand-gray mt-2 font-medium">{item.day}</span>
           </div>
         ))}
+      </div>
+      
+      <div className="text-center">
+        <div className="text-2xl font-bold text-brand-black">94%</div>
+        <div className="text-sm text-brand-gray">Current Score</div>
       </div>
     </div>
   );
 };
 
-const TimeTracker = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+const ScanStatusWidget = () => {
+  const [isScanning, setIsScanning] = useState(true);
   
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-brand-black">Time tracker</h3>
-        <ArrowUp size={16} className="text-brand-gray" />
+        <h3 className="text-lg font-semibold text-brand-black">Active Scans</h3>
+        <Activity size={16} className="text-blue-500" />
       </div>
       
       <div className="flex flex-col items-center">
@@ -312,28 +365,40 @@ const TimeTracker = () => {
               stroke="hsl(var(--accent))"
               strokeWidth="8"
               fill="none"
-              strokeDasharray={`${60} ${240}`}
+              strokeDasharray={`${75} ${225}`}
               strokeLinecap="round"
+              className={isScanning ? "animate-pulse" : ""}
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <div className="text-2xl font-bold text-brand-black">02:35</div>
-            <div className="text-xs text-brand-gray font-medium">Work Time</div>
+            <div className="text-2xl font-bold text-brand-black">3/5</div>
+            <div className="text-xs text-brand-gray font-medium">Projects</div>
+          </div>
+        </div>
+        
+        <div className="w-full space-y-2 mb-4">
+          <div className="flex justify-between text-sm">
+            <span className="text-brand-black">E-commerce API</span>
+            <span className="text-blue-600">Scanning...</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-brand-black">Mobile App</span>
+            <span className="text-green-600">Complete</span>
           </div>
         </div>
         
         <div className="flex items-center space-x-4">
           <button
-            onClick={() => setIsPlaying(!isPlaying)}
+            onClick={() => setIsScanning(!isScanning)}
             className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors"
           >
-            {isPlaying ? <Pause size={14} /> : <Play size={14} />}
+            {isScanning ? <Pause size={14} /> : <Play size={14} />}
           </button>
           <button className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors">
             <Square size={14} />
           </button>
           <button className="w-8 h-8 bg-brand-black rounded-full flex items-center justify-center text-brand-light hover:bg-brand-black/80 transition-colors">
-            <ArrowUp size={14} />
+            <Zap size={14} />
           </button>
         </div>
       </div>
@@ -341,59 +406,79 @@ const TimeTracker = () => {
   );
 };
 
-const OnboardingPanel = () => {
-  const tasks = [
-    { id: 1, name: 'Interactive Walkthrough', completed: true, time: '10:15:20' },
-    { id: 2, name: 'Team Meeting', completed: true, time: '11:30:15' },
-    { id: 3, name: 'Project Updates', completed: false, time: '12:45:30' },
-    { id: 4, name: 'Devices QA Goals', completed: false, time: '14:00:45' },
-    { id: 5, name: 'HR Policy Review', completed: false, time: '15:15:10' }
+const SecurityAlertsPanel = () => {
+  const alerts = [
+    { id: 1, type: 'Critical', message: 'SQL Injection detected in user authentication', project: 'E-commerce Platform', time: '5 min ago', status: 'new' },
+    { id: 2, type: 'High', message: 'Outdated dependency with known CVE', project: 'Mobile Banking App', time: '15 min ago', status: 'investigating' },
+    { id: 3, type: 'Medium', message: 'Weak password policy detected', project: 'Admin Dashboard', time: '1 hour ago', status: 'acknowledged' },
+    { id: 4, type: 'High', message: 'Cross-site scripting vulnerability', project: 'User Portal', time: '2 hours ago', status: 'fixed' },
+    { id: 5, type: 'Critical', message: 'Exposed API keys in repository', project: 'Payment Gateway', time: '3 hours ago', status: 'new' }
   ];
+  
+  const getAlertColor = (type: string) => {
+    switch (type) {
+      case 'Critical': return 'bg-red-500';
+      case 'High': return 'bg-orange-500';
+      case 'Medium': return 'bg-yellow-500';
+      default: return 'bg-gray-500';
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'new': return 'text-red-600';
+      case 'investigating': return 'text-blue-600';
+      case 'acknowledged': return 'text-yellow-600';
+      case 'fixed': return 'text-green-600';
+      default: return 'text-gray-600';
+    }
+  };
   
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-brand-black">Onboarding</h3>
-        <span className="text-lg font-bold text-brand-black">18%</span>
+        <h3 className="text-lg font-semibold text-brand-black">Security Alerts</h3>
+        <span className="text-lg font-bold text-brand-black">12</span>
       </div>
       
       <div className="mb-6">
         <div className="flex space-x-2 mb-3">
-          <div className="flex-1 bg-accent h-2 rounded-full"></div>
-          <div className="flex-1 bg-accent/40 h-2 rounded-full"></div>
+          <div className="flex-1 bg-red-500 h-2 rounded-full"></div>
+          <div className="flex-1 bg-orange-500 h-2 rounded-full"></div>
+          <div className="flex-1 bg-yellow-500 h-2 rounded-full"></div>
           <div className="flex-1 bg-gray-200 h-2 rounded-full"></div>
         </div>
         <div className="flex justify-between text-xs text-brand-gray font-medium">
-          <span>50%</span>
-          <span>20%</span>
-          <span>10%</span>
+          <span>5 Critical</span>
+          <span>4 High</span>
+          <span>3 Medium</span>
+          <span>0 Low</span>
         </div>
       </div>
       
       <div className="mb-4">
-        <span className="text-sm font-semibold text-brand-gray">Task</span>
+        <span className="text-sm font-semibold text-brand-gray">Recent Alerts</span>
       </div>
       
       <div className="bg-brand-black/95 backdrop-blur-sm rounded-xl p-4">
-        <div className="text-brand-light text-sm font-semibold mb-4">Onboarding Task 2/8</div>
+        <div className="text-brand-light text-sm font-semibold mb-4">Priority Queue</div>
         
-        <div className="space-y-3">
-          {tasks.map((task) => (
-            <div key={task.id} className="flex items-center space-x-3">
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold ${
-                task.completed 
-                  ? 'bg-accent text-accent-foreground' 
-                  : 'bg-brand-gray text-brand-light'
-              }`}>
-                {task.completed ? '✓' : task.id}
+        <div className="space-y-3 max-h-64 overflow-y-auto">
+          {alerts.map((alert) => (
+            <div key={alert.id} className="flex items-start space-x-3">
+              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold text-white ${getAlertColor(alert.type)}`}>
+                !
               </div>
-              <div className="flex-1">
-                <div className="text-brand-light text-sm font-medium">{task.name}</div>
-                <div className="text-brand-gray text-xs">{task.time}</div>
+              <div className="flex-1 min-w-0">
+                <div className="text-brand-light text-sm font-medium truncate">{alert.message}</div>
+                <div className="flex items-center justify-between mt-1">
+                  <div className="text-brand-gray text-xs truncate">{alert.project}</div>
+                  <div className="text-brand-gray text-xs">{alert.time}</div>
+                </div>
+                <div className={`text-xs mt-1 ${getStatusColor(alert.status)} capitalize`}>
+                  {alert.status}
+                </div>
               </div>
-              {task.completed && (
-                <div className="w-2 h-2 bg-accent rounded-full"></div>
-              )}
             </div>
           ))}
         </div>
@@ -402,71 +487,52 @@ const OnboardingPanel = () => {
   );
 };
 
-const CalendarStrip = () => {
-  const days = [
-    { day: 'Mon', date: '22' },
-    { day: 'Tue', date: '23' },
-    { day: 'Wed', date: '24' },
-    { day: 'Thu', date: '25' },
-    { day: 'Fri', date: '26' },
-    { day: 'Sat', date: '27' }
+const RecentActivityStrip = () => {
+  const activities = [
+    { time: '8:00 am', type: 'scan', project: 'E-commerce Platform', status: 'completed' },
+    { time: '9:15 am', type: 'alert', project: 'Mobile Banking App', status: 'critical' },
+    { time: '10:30 am', type: 'scan', project: 'User Portal', status: 'in-progress' },
+    { time: '11:45 am', type: 'fix', project: 'API Gateway', status: 'resolved' }
   ];
   
-  const times = ['8:00 am', '9:00 am', '10:00 am', '11:00 am'];
+  const getActivityIcon = (type: string) => {
+    switch (type) {
+      case 'scan': return <Shield className="w-3 h-3" />;
+      case 'alert': return <AlertTriangle className="w-3 h-3" />;
+      case 'fix': return <CheckCircle className="w-3 h-3" />;
+      default: return <Clock className="w-3 h-3" />;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed': return 'bg-green-500';
+      case 'critical': return 'bg-red-500';
+      case 'in-progress': return 'bg-blue-500';
+      case 'resolved': return 'bg-green-600';
+      default: return 'bg-gray-500';
+    }
+  };
   
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20">
       <div className="flex items-center justify-between mb-6">
-        <div className="flex space-x-4 text-sm">
-          <span className="text-brand-gray">August</span>
-          <span className="font-semibold text-brand-black">September 2024</span>
-          <span className="text-brand-gray">October</span>
-        </div>
-      </div>
-      
-      <div className="grid grid-cols-7 gap-4 mb-4">
-        <div></div>
-        {days.map((day, index) => (
-          <div key={index} className="text-center">
-            <div className="text-xs text-brand-gray mb-1 font-medium">{day.day}</div>
-            <div className="text-sm font-semibold text-brand-black">{day.date}</div>
-          </div>
-        ))}
+        <div className="text-lg font-semibold text-brand-black">Recent Activity</div>
       </div>
       
       <div className="space-y-3">
-        {times.map((time, index) => (
-          <div key={index} className="grid grid-cols-7 gap-4 items-center">
-            <div className="text-xs text-brand-gray font-medium">{time}</div>
-            <div></div>
-            <div></div>
-            {index === 1 && (
-              <div className="col-span-2 bg-brand-black text-brand-light text-xs px-3 py-2 rounded-full flex items-center space-x-2">
-                <span className="font-medium">Weekly Team Sync</span>
-                <div className="flex -space-x-1">
-                  <div className="w-4 h-4 bg-blue-400 rounded-full border border-white"></div>
-                  <div className="w-4 h-4 bg-green-400 rounded-full border border-white"></div>
-                  <div className="w-4 h-4 bg-red-400 rounded-full border border-white"></div>
-                </div>
+        {activities.map((activity, index) => (
+          <div key={index} className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="text-xs text-brand-gray font-medium w-16">{activity.time}</div>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white ${getStatusColor(activity.status)}`}>
+                {getActivityIcon(activity.type)}
               </div>
-            )}
-            {index === 2 && (
-              <div className="col-span-2 bg-gray-200 text-brand-black text-xs px-3 py-2 rounded-full flex items-center space-x-2">
-                <span className="font-medium">Onboarding Session</span>
-                <div className="flex -space-x-1">
-                  <div className="w-4 h-4 bg-accent rounded-full border border-white"></div>
-                  <div className="w-4 h-4 bg-purple-400 rounded-full border border-white"></div>
-                </div>
+              <div>
+                <div className="text-sm font-medium text-brand-black">{activity.project}</div>
+                <div className="text-xs text-brand-gray capitalize">{activity.type} - {activity.status}</div>
               </div>
-            )}
-            {index !== 1 && index !== 2 && (
-              <>
-                <div></div>
-                <div></div>
-                <div></div>
-              </>
-            )}
-            <div></div>
+            </div>
           </div>
         ))}
       </div>
@@ -496,32 +562,32 @@ const Dashboard = () => {
           <div className="max-w-7xl mx-auto">
             {/* Breadcrumb Navigation - White text for dark background */}
             <div className="flex items-center space-x-2 text-sm mb-4">
-              <span className="font-medium text-white">Lora Piterson</span>
+              <span className="font-medium text-white">SecureThread</span>
               <ChevronRight size={16} className="text-gray-300" />
               <span className="font-medium text-white">Dashboard</span>
             </div>
             
             {/* Main heading - White text for dark background */}
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-6">Welcome in, Nixtio</h1>
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-6">Security Dashboard</h1>
             
             <StatsRow />
             <TopStatsCards />
             
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-6">
               <div className="lg:col-span-4 xl:col-span-3">
-                <ProfileCard />
+                <SecurityOverviewCard />
               </div>
               
               <div className="lg:col-span-5 xl:col-span-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <ProgressWidget />
-                  <TimeTracker />
+                  <SecurityScoreWidget />
+                  <ScanStatusWidget />
                 </div>
-                <CalendarStrip />
+                <RecentActivityStrip />
               </div>
               
               <div className="lg:col-span-3">
-                <OnboardingPanel />
+                <SecurityAlertsPanel />
               </div>
             </div>
           </div>
